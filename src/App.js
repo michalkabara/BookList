@@ -23,7 +23,6 @@ function App() {
     if (bookList) {
       const bookCategories = bookList.map(book => book.publishingHouse)
       setCategories(bookCategories)
-      console.log(categories)
     }
   }
 
@@ -48,7 +47,8 @@ function App() {
   const filterBooks = category => {
     const newBooks = bookList.filter(item => item.publishingHouse === category)
     if (category === 'all') {
-      fetchData()
+      const stateBackup = bookList
+      setBookList(stateBackup)
     } else setBookList(newBooks)
   }
 
