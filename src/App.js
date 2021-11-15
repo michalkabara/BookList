@@ -7,13 +7,11 @@ import logo from './img/book.png'
 import {Switch, Route, Link, useHistory} from 'react-router-dom'
 
 function App() {
-  const history = useHistory()
-  const api = new FakeBookApi()
-
+  //booklist state
   const [bookList, setBookList] = useState([])
-  const [filteredBooks, setFilteredBooks] = useState([])
+  //categories state
   const [categories, setCategories] = useState([])
-  const [selectedCategories, setSelectedCategories] = useState([])
+  //book state
   const [book, setBook] = useState({
     title: '',
     author: '',
@@ -21,47 +19,21 @@ function App() {
     pages: '',
   })
 
-  const setSelectedCategoriesHandler = (category, event) => {
-    if (event.target.checked) {
-      setSelectedCategories(prevState => [...prevState, category])
-    } else {
-      setSelectedCategories(prevState =>
-        prevState.filter(item => item !== category)
-      )
+  //
+  const history = useHistory()
+  const api = new FakeBookApi()
+
+  const fetchData = () => {
+    api.fetchBooks().then(data => setBookList(data))
+    if (bookList) {
+      const bookCategories = bookList.map(book => book.publishingHouse)
+      setCategories(bookCategories)
     }
   }
 
-  const cleanSelectedCategories = () => {
-    setSelectedCategories([])
-  }
-
   useEffect(() => {
-    const newBooks = []
-    if (selectedCategories.length) {
-      selectedCategories.forEach(categoryItem => {
-        const debug = bookList.filter(
-          item => item.publishingHouse === categoryItem
-        )
-        newBooks.push(...debug)
-      })
-      setFilteredBooks(newBooks)
-    } else setFilteredBooks(bookList)
-  }, [selectedCategories])
-
-  useEffect(() => {
-    ;(async () => {
-      const response = await api.fetchBooks()
-      if (response) {
-        const bookCategories = response.map(book => book.publishingHouse)
-        setCategories([...new Set(bookCategories)])
-      }
-      setBookList(response)
-    })()
+    fetchData()
   }, [])
-
-  useEffect(() => {
-    setFilteredBooks(bookList)
-  }, [bookList])
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -75,6 +47,14 @@ function App() {
       pages: '',
     })
     history.push('/')
+  }
+
+  const filterBooks = category => {
+    const newBooks = bookList.filter(item => item.publishingHouse === category)
+    if (category === 'all') {
+      const stateBackup = bookList
+      setBookList(stateBackup)
+    } else setBookList(newBooks)
   }
 
   return (
@@ -93,13 +73,9 @@ function App() {
       <div className='body'>
         <Switch>
           <Route exact path='/'>
-            <Categories
-              categories={categories}
-              setSelectedCategoriesHandler={setSelectedCategoriesHandler}
-              cleanSelectedCategories={cleanSelectedCategories}
-            />
+            <Categories filterBooks={filterBooks} categories={categories} />
             <div className='lista'>
-              {filteredBooks.map(book => {
+              {bookList.map(book => {
                 const {id, title, author, publishingHouse, pages} = book
                 return (
                   <Book
@@ -121,14 +97,12 @@ function App() {
                   type='text'
                   value={book.title}
                   onChange={e => setBook({...book, title: e.target.value})}
-                  required
                 />
                 <label htmlFor=''>Autor</label>
                 <input
                   type='text'
                   value={book.author}
                   onChange={e => setBook({...book, author: e.target.value})}
-                  required
                 />
                 <label htmlFor=''>Wydawnictwo</label>
                 <input
@@ -137,14 +111,12 @@ function App() {
                   onChange={e =>
                     setBook({...book, publishingHouse: e.target.value})
                   }
-                  required
                 />
                 <label htmlFor=''>Ilość stron</label>
                 <input
                   type='number'
                   value={book.pages}
                   onChange={e => setBook({...book, pages: e.target.value})}
-                  required
                 />
                 <button>Dodaj książkę</button>
               </form>
