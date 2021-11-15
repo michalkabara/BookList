@@ -1,13 +1,21 @@
 import React from 'react'
 
-const Categories = ({filterBooks, categories}) => {
+const Categories = ({
+  cleanSelectedCategories,
+  categories,
+  setSelectedCategoriesHandler,
+}) => {
   return (
     <div className='categories-container'>
-      <button onClick={() => filterBooks('all')}>Reset</button>
+      <button onClick={() => cleanSelectedCategories()}>Reset</button>
       {categories.map(item => (
         <div className='checkbox-container'>
           <span>{item}</span>
-          <input type='checkbox' onClick={() => filterBooks(item)}></input>
+          <input
+            type='checkbox'
+            onClick={event =>
+              setSelectedCategoriesHandler(item, event)
+            }></input>
         </div>
       ))}
     </div>

@@ -7,19 +7,25 @@ import logo from './img/book.png'
 import {Switch, Route, Link, useHistory} from 'react-router-dom'
 
 function App() {
+  const history = useHistory()
+  const api = new FakeBookApi()
+
+  //booklist state
   const [bookList, setBookList] = useState([])
+  //categories state
   const [categories, setCategories] = useState([])
+  //book state
   const [book, setBook] = useState({
     title: '',
     author: '',
     publishingHouse: '',
     pages: '',
   })
-  const history = useHistory()
-  const api = new FakeBookApi()
 
-  const fetchData = () => {
-    api.fetchBooks().then(data => setBookList(data))
+  const fetchData = async () => {
+    api.fetchBooks()
+    await (data => data.json())
+    await setBookList(data)
     if (bookList) {
       const bookCategories = bookList.map(book => book.publishingHouse)
       setCategories(bookCategories)
