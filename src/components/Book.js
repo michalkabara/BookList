@@ -1,6 +1,11 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
+import {useGlobalContext} from '../context'
 
-const Book = ({id, title, author, publishingHouse, pages}) => {
+const Book = () => {
+  const {book} = useGlobalContext()
+
+  const {id, title, author, publishingHouse, pages} = book
+
   return (
     <div key={id}>
       <h3>{title}</h3>
