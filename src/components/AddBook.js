@@ -3,7 +3,7 @@ import {useGlobalContext} from '../context'
 
 const Addbook = () => {
   const history = useHistory()
-  const {book, setBook} = useGlobalContext()
+  const {book, setBook, api, setBookList, bookList} = useGlobalContext()
 
   const handleSubmit = e => {
     e.preventDefault()

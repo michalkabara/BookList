@@ -1,23 +1,21 @@
 import {useState, useEffect} from 'react'
+import {useGlobalContext} from '../context'
 import Book from './Book'
-import {FakeBookApi} from '../data/FakeBookApi'
 
 const Booklist = () => {
-  const api = new FakeBookApi()
+  const {api, setBookList, bookList} = useGlobalContext()
 
-  const [bookList, setBookList] = useState([])
+  const [categories, setCategories] = useState([])
 
-  const fetchBooks = async () => {
+  const fetchData = async () => {
     const response = await api.fetchBooks()
-    if (response) {
-      const bookCategories = response.map(book => book.publishingHouse)
-      setCategories([...new Set(bookCategories)])
-    }
+
     setBookList(response)
+    console.log(bookList)
   }
 
   useEffect(() => {
-    fetchBooks()
+    fetchData()
   }, [])
 
   return (

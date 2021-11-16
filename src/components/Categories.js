@@ -1,23 +1,15 @@
 import React from 'react'
 
-const Categories = ({
-  cleanSelectedCategories,
-  categories,
-  setSelectedCategoriesHandler,
-}) => {
+const Categories = ({}) => {
   return (
     <div className='categories-container'>
-      <button onClick={() => cleanSelectedCategories()}>Reset</button>
-      {categories.map(item => (
+      <button>Reset</button>
+      {/* {categories.map(item => (
         <div className='checkbox-container'>
           <span>{item}</span>
-          <input
-            type='checkbox'
-            onClick={event =>
-              setSelectedCategoriesHandler(item, event)
-            }></input>
+          <input type='checkbox'></input>
         </div>
-      ))}
+      ))} */}
     </div>
   )
 }

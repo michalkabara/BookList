@@ -1,8 +1,11 @@
 import React, {useState, useContext} from 'react'
+import {FakeBookApi} from './data/FakeBookApi'
 
 const AppContext = React.createContext()
 
 const AppProvider = ({children}) => {
+  const api = new FakeBookApi()
+  const [bookList, setBookList] = useState([])
   const [book, setBook] = useState({
     title: '',
     author: '',
@@ -11,7 +14,7 @@ const AppProvider = ({children}) => {
   })
 
   return (
-    <AppContext.Provider value={{book, setBook}}>
+    <AppContext.Provider value={{book, setBook, api, bookList, setBookList}}>
       {children}
     </AppContext.Provider>
   )
