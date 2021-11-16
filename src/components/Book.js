@@ -1,9 +1,4 @@
-import {useState, useEffect} from 'react'
-import {useGlobalContext} from '../context'
-
-const Book = () => {
-  const {book} = useGlobalContext()
-
+const Book = book => {
   const {id, title, author, publishingHouse, pages} = book
 
   return (
