@@ -13,16 +13,8 @@
   }
 }
 
-header {
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 60px;
-  top: 0;
+* {
+  box-sizing: border-box;
 }
 
 .App-link {
@@ -36,45 +28,4 @@ header {
   to {
     transform: rotate(360deg);
   }
-}
-
-.body {
-  background-color: aliceblue;
-  display: block;
-  padding-top: 20px;
-}
-
-.lista {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-  max-width: 1270px;
-  margin: auto;
-  gap: 10px;
-}
-
-.logo {
-  max-width: 50px;
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.checkbox-container {
-  display: flex;
-  flex-direction: row;
-}
-
-.categories-container {
-  display: flex;
-  flex-direction: row;
-  padding: 0 30px;
 }

@@ -1,6 +1,8 @@
 import {useHistory} from 'react-router-dom'
 import {useState} from 'react/cjs/react.development'
 import {useGlobalContext} from '../context'
+import styled from 'styled-components'
+import {StyledButton} from '../App'
 
 const Addbook = () => {
   const history = useHistory()
@@ -29,7 +31,7 @@ const Addbook = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className='form'>
+      <AddBookForm onSubmit={handleSubmit}>
         <label htmlFor=''>Tytuł</label>
         <input
           type='text'
@@ -60,10 +62,34 @@ const Addbook = () => {
           onChange={e => setNewBook({...newBook, pages: e.target.value})}
           required
         />
-        <button>Dodaj książkę</button>
-      </form>
+        <StyledButton>Dodaj książkę</StyledButton>
+      </AddBookForm>
     </div>
   )
 }
 
+const AddBookForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  margin: auto;
+
+  input {
+    border-radius: 8px;
+    border: 0;
+    background-color: #f1f1f1;
+    padding: 15px;
+  }
+
+  label {
+    text-align: left;
+    margin-bottom: 5px;
+    margin-top: 20px;
+  }
+
+  button {
+    width: 200px;
+    margin: 20px auto;
+  }
+`
 export default Addbook

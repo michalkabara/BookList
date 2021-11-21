@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import {useGlobalContext} from '../context'
 import Book from './Book'
+import styled from 'styled-components'
 
 const Booklist = () => {
   const {api, setBookList, bookList} = useGlobalContext()
@@ -19,7 +20,7 @@ const Booklist = () => {
   }, [])
 
   return (
-    <div className='lista'>
+    <BookGrid>
       {bookList.map(book => {
         const {id, title, author, publishingHouse, pages} = book
         return (
@@ -32,8 +33,13 @@ const Booklist = () => {
           />
         )
       })}
-    </div>
+    </BookGrid>
   )
 }
+
+const BookGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+`
 
 export default Booklist
